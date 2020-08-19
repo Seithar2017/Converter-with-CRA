@@ -1,10 +1,19 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./styles/App.css";
+import AmountInput from "./components/AmountInput";
+import UnitInput from "./components/UnitInput";
+import ResultOutput from "./components/ResultOutput";
 
 class App extends Component {
   state = {};
   render() {
-    return <div>Hello</div>;
+    return (
+      <div className="app">
+        <AmountInput />
+        <UnitInput />
+        <ResultOutput />
+      </div>
+    );
   }
 }
 
