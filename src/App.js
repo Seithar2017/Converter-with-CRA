@@ -9,10 +9,11 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <div className="panel"></div>
-        <AmountInput />
-        <UnitInput />
-        <ResultOutput />
+        <div className="panel">
+          <AmountInput />
+          <UnitInput />
+          <ResultOutput />
+        </div>
       </div>
     );
   }
