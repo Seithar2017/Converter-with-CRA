@@ -1,6 +1,7 @@
 import React from "react";
+import "../styles/ResultOutput.css";
 const ResultOutput = (props) => {
-  return <div>ResultOutput</div>;
+  return <div className="result">ResultOutput</div>;
 };
 
 export default ResultOutput;
