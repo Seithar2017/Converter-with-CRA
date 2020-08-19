@@ -47,7 +47,7 @@ class App extends Component {
   convert = (uF, uT, amount) => {
     const kg = this.convertToKg(uF);
     const conversion = this.convertAnyFromKg(kg, uT);
-    return amount * conversion;
+    return amount * uT;
   };
   convertAnyFromKg = (uT, kg) => {
     if (uT === "kg") return kg;
@@ -67,7 +67,10 @@ class App extends Component {
     return (
       <div className="app">
         <div className="panel">
-          <AmountInput amountChange={this.handleChangeAmount} />
+          <AmountInput
+            amount={this.state.amount}
+            amountChange={this.handleChangeAmount}
+          />
           <UnitInput
             units={this.units}
             unitChangeFrom={this.handleChangeFrom}
