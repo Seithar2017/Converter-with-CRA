@@ -44,7 +44,25 @@ class App extends Component {
       amount: value,
     });
   };
-
+  convert = (uF, uT, amount) => {
+    const kg = this.convertToKg(uF);
+    const uT = this.convertAnyFromKg(kg);
+    return amount * uT;
+  };
+  convertAnyFromKg = (uT) => {
+    if (uT === "kg") return uT;
+    else if (uT === "dag") return uT * 100;
+    else if (uT === "g") return uT * 1000;
+    else if (uT === "stone") return uT * 0.157473044;
+    else if (uT === "t") return uT * 0.0001;
+  };
+  convertToKg = (uF) => {
+    if (uF === "dag") return uF * 0.01;
+    else if (uF === "g") return uF * 0.001;
+    else if (uF === "stone") return uF * 6.35029318;
+    else if (uF === "t") return uF * 1000;
+    else if (uF === "kg") return uF;
+  };
   render() {
     return (
       <div className="app">
