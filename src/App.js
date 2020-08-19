@@ -46,15 +46,15 @@ class App extends Component {
   };
   convert = (uF, uT, amount) => {
     const kg = this.convertToKg(uF);
-    const uT = this.convertAnyFromKg(kg);
-    return amount * uT;
+    const conversion = this.convertAnyFromKg(kg, uT);
+    return amount * conversion;
   };
-  convertAnyFromKg = (uT) => {
-    if (uT === "kg") return uT;
-    else if (uT === "dag") return uT * 100;
-    else if (uT === "g") return uT * 1000;
-    else if (uT === "stone") return uT * 0.157473044;
-    else if (uT === "t") return uT * 0.0001;
+  convertAnyFromKg = (uT, kg) => {
+    if (uT === "kg") return kg;
+    else if (uT === "dag") return kg * 100;
+    else if (uT === "g") return kg * 1000;
+    else if (uT === "stone") return kg * 0.157473044;
+    else if (uT === "t") return kg * 0.0001;
   };
   convertToKg = (uF) => {
     if (uF === "dag") return uF * 0.01;
