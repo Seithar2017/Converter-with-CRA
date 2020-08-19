@@ -6,21 +6,8 @@ import ResultOutput from "./components/ResultOutput";
 
 class App extends Component {
   units = {
-    weight: [
-      { control: false },
-      { kg: "kg" },
-      { dag: "dag" },
-      { g: "g" },
-      { st: "stone" },
-      { t: "t" },
-    ],
-    measure: [
-      { control: false },
-      { m: "meter" },
-      { ml: "mile" },
-      { cm: "centimeter" },
-      { dm: "decimeter" },
-    ],
+    weight: [false, "kg", "dag", "gram", "stone", "tone"],
+    measure: [false, "meter", "mile", "centimeter", "decimeter"],
   };
 
   state = {
@@ -28,7 +15,6 @@ class App extends Component {
     activeTo: "",
     amount: 0,
   };
-
   handleChangeFrom = (value) => {
     this.setState({
       activeFrom: value,
@@ -64,6 +50,7 @@ class App extends Component {
     else if (uF === "kg") return uF;
   };
   render() {
+    console.log(this.units.measure[1]);
     return (
       <div className="app">
         <div className="panel">
