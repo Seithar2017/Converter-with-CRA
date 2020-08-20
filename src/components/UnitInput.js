@@ -9,17 +9,14 @@ class UnitInput extends Component {
 
   handleChange = (e) => {
     const name = e.target.name;
+    if (name === "activeFrom") {
+      this.setState({
+        activeTo: "",
+      });
+    }
     this.setState({
       [name]: e.target.value,
     });
-  };
-
-  handleClick = (e) => {
-    const name = e.target.name;
-    this.setState({
-      [name]: "",
-    });
-    console.log(e.target);
   };
 
   componentDidUpdate() {
@@ -41,7 +38,13 @@ class UnitInput extends Component {
     }
   };
   render() {
-    const measures = this.props.database.map((measure) => {
+    // Preparing list of units for display in FROM label
+    let measures = this.props.database.flat(Infinity);
+    measures = measures.filter(
+      (measure) => measure !== false && measure !== true
+    );
+
+    measures = measures.map((measure) => {
       return (
         <option key={measure} value={measure}>
           {measure}
@@ -49,6 +52,37 @@ class UnitInput extends Component {
       );
     });
 
+    // Preparing list of units for display in TO label
+
+    const length = this.props.database.length;
+    //The loop is going to mark first element of an array that is going to be active in TO label as 'true'
+    // and as 'false' the arrays that are not going to be shown in TO label
+    for (let i = 0; i < length; i++) {
+      const index = this.props.database[i].findIndex(
+        (unit) => unit === this.state.activeFrom
+      );
+      if (index !== -1) {
+        this.props.database[i][0] = true;
+      } else if (index === -1) {
+        this.props.database[i][0] = false;
+      }
+    }
+
+    //The loop is going to take units from array that its first element is set as true and put them in measureTo(already as and option)
+    let measuresTo = [];
+    for (let i = 0; i < length; i++) {
+      if (this.props.database[i][0]) {
+        measuresTo = this.props.database[i].map((measure) => {
+          if (measure !== true) {
+            return (
+              <option key={measure} value={measure}>
+                {measure}
+              </option>
+            );
+          } else return null;
+        });
+      }
+    }
     return (
       <form>
         <div className="from">
@@ -75,7 +109,7 @@ class UnitInput extends Component {
             id="to"
           >
             <option style={{ display: "none" }} disabled label=" "></option>
-            {measures}
+            {measuresTo}
           </select>
         </div>
         <button onClick={this.handleSubmit}>Convert</button>
