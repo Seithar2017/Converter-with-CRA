@@ -4,13 +4,13 @@ import AmountInput from "./components/AmountInput";
 import UnitInput from "./components/UnitInput";
 import ResultOutput from "./components/ResultOutput";
 
-//to extend database with new group of units, simply add a new array in units below, with first element set as false, followed by strings containig name of units e.g [false, "mile", "kilometer", "meter", "centimeter"],
+//to extend database with new group of units, simply add a new array in "units" below, with first element set as false, followed by strings containig name of units e.g [false, "mile", "kilometer", "meter", "centimeter"],
 //To implement converting operations see method convertToMainUnit() and convertAnyFromMainUnit()
 
 class App extends Component {
   units = [
     [false, "kg", "dag", "gram", "stone", "tone"],
-    [false, "pl", "usd", "euro", "gbp"],
+    [false, "pln", "usd", "euro", "gbp"],
   ];
 
   state = {
@@ -40,14 +40,20 @@ class App extends Component {
     });
   };
   //To add new conversion on new database, you need to specify which unit from the database you want to be your main. As you choose the main unit, add conditional "else if" with ratio on conversion for each unit from your database to main unit in convertToMainUnit() method.
-  //For example: database: [false, "meter", "mile", "decimeter", "kilometer"]. You decide to choose kilometer as your main unit.
+  //e.g: database: [false, "meter", "mile", "decimeter", "kilometer"]. You decide to choose kilometer as your main unit.
   //In the convertToMainUnit() you need to add:
   //else if(uF === "meter") return 1000;
   //else if(uF === "mile") return 0.62;
+  //e.t.c
 
   // The next step to implement new database is to update convertAnyFromMain() method.
-  //uT stands for the name of unit that conversion is beeing made to, main stands for the ratio of converting unit to main unit.
+  //uT stands for the name of unit that conversion is beeing made to, main stands for the ratio of converting unit to main unit based on convertToMainUnit() method.
   //Add conditional "else if" with ratio on conversion for each unit from your database to main unit.
+  //e.g: your new database: [false, "meter", "mile", "decimeter", "kilometer"]. You've chosen kilometer as your main unit.
+  //In convertAnyFromMain() add:
+  //else if (uT === "meter") return main * 0.001;
+  //else if (uT === "mile") return main * 1.609344;
+  //e.t.c
   convert = (uF, uT, amount) => {
     if (uF === uT) return amount;
     const main = this.convertToMainUnit(uF);
@@ -76,7 +82,7 @@ class App extends Component {
     else if (uF === "usd") return 0.27;
     else if (uF === "euro") return 0.23;
     else if (uF === "gbp") return 0.21;
-    else if (uF === "pl") return 1;
+    else if (uF === "pln") return 1;
   };
   render() {
     return (
