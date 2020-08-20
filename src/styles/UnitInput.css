@@ -19,3 +19,6 @@ button {
   font-weight: bold;
   margin-top: 10px;
 }
+select {
+  width: 75%;
+}
