@@ -4,6 +4,9 @@ import AmountInput from "./components/AmountInput";
 import UnitInput from "./components/UnitInput";
 import ResultOutput from "./components/ResultOutput";
 
+//to extend database with new group of units, simply add a new array in units below, with first element set as false, followed by strings containig name of units e.g [false, "mile", "kilometer", "meter", "centimeter"],
+//To implement converting operations see method convertToMainUnit() and convertAnyFromMainUnit()
+
 class App extends Component {
   units = [
     [false, "kg", "dag", "gram", "stone", "tone"],
@@ -36,15 +39,22 @@ class App extends Component {
       result,
     });
   };
+  //To add new conversion on new database, you need to specify which unit from the database you want to be your main. As you choose the main unit, add conditional "else if" with ratio on conversion for each unit from your database to main unit in convertToMainUnit() method.
+  //For example: database: [false, "meter", "mile", "decimeter", "kilometer"]. You decide to choose kilometer as your main unit.
+  //In the convertToMainUnit() you need to add:
+  //else if(uF === "meter") return 1000;
+  //else if(uF === "mile") return 0.62;
+
+  // The next step to implement new database is to update convertAnyFromMain() method.
+  //uT stands for the name of unit that conversion is beeing made to, main stands for the ratio of converting unit to main unit.
+  //Add conditional "else if" with ratio on conversion for each unit from your database to main unit.
   convert = (uF, uT, amount) => {
-    debugger;
     if (uF === uT) return amount;
     const main = this.convertToMainUnit(uF);
     const conversion = this.convertAnyFromMain(uT, main);
     return amount * conversion;
   };
   convertAnyFromMain = (uT, main) => {
-    debugger;
     if (uT === "main") return main;
     else if (uT === "dag") return main * 100;
     else if (uT === "gram") return main * 1000;
@@ -54,8 +64,8 @@ class App extends Component {
     else if (uT === "euro") return main * 4.4;
     else if (uT === "gbp") return main * 4.87;
   };
+
   convertToMainUnit = (uF) => {
-    debugger;
     // The main unit as weight is the KG unit
     if (uF === "dag") return 0.01;
     else if (uF === "gram") return 0.001;
