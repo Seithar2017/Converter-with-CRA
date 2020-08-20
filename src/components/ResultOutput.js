@@ -1,13 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import "../styles/ResultOutput.css";
 
-class ResultOutput extends Component {
-  state = {
-    result: 0,
-  };
-  render() {
-    return <div className="result">ResultOutput</div>;
-  }
-}
+const ResultOutput = (props) => {
+  return <div className="result">{props.result}</div>;
+};
 
 export default ResultOutput;
