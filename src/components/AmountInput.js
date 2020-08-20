@@ -3,13 +3,20 @@ import "../styles/AmountInput.css";
 
 class AmountInput extends Component {
   state = {
-    amount: 0,
+    amount: "",
   };
 
   handleChange = (e) => {
-    this.setState({
-      amount: e.target.value,
-    });
+    console.log(e.target);
+
+    if (e.target.value <= 0) {
+      this.setState({
+        amount: "",
+      });
+    } else
+      this.setState({
+        amount: e.target.value,
+      });
     this.props.amountChange(this.state.amount);
   };
 
@@ -27,6 +34,7 @@ class AmountInput extends Component {
           type="number"
           value={this.state.amount}
           onChange={this.handleChange}
+          min="0"
         />
       </div>
     );
