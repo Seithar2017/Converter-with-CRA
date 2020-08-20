@@ -5,15 +5,13 @@ import UnitInput from "./components/UnitInput";
 import ResultOutput from "./components/ResultOutput";
 
 class App extends Component {
-  units = {
-    weight: [false, "kg", "dag", "gram", "stone", "tone"],
-    measure: [false, "meter", "mile", "centimeter", "decimeter"],
-  };
+  units = ["kg", "dag", "gram", "stone", "tone"];
 
   state = {
     activeFrom: "",
     activeTo: "",
-    amount: 0,
+    amount: "",
+    result: "",
   };
   handleChangeFrom = (value) => {
     this.setState({
@@ -30,27 +28,32 @@ class App extends Component {
       amount: value,
     });
   };
+  handleChangeResult = (result) => {
+    this.setState({
+      result,
+    });
+  };
   convert = (uF, uT, amount) => {
+    if (uF === uT) return amount;
     const kg = this.convertToKg(uF);
-    const conversion = this.convertAnyFromKg(kg, uT);
-    return amount * uT;
+    const conversion = this.convertAnyFromKg(uT, kg);
+    return amount * conversion;
   };
   convertAnyFromKg = (uT, kg) => {
     if (uT === "kg") return kg;
     else if (uT === "dag") return kg * 100;
-    else if (uT === "g") return kg * 1000;
+    else if (uT === "gram") return kg * 1000;
     else if (uT === "stone") return kg * 0.157473044;
-    else if (uT === "t") return kg * 0.0001;
+    else if (uT === "tone") return kg * 0.0001;
   };
   convertToKg = (uF) => {
-    if (uF === "dag") return uF * 0.01;
-    else if (uF === "g") return uF * 0.001;
-    else if (uF === "stone") return uF * 6.35029318;
-    else if (uF === "t") return uF * 1000;
-    else if (uF === "kg") return uF;
+    if (uF === "dag") return 0.01;
+    else if (uF === "gram") return 0.001;
+    else if (uF === "stone") return 6.35029318;
+    else if (uF === "tone") return 1000;
+    else if (uF === "kg") return 1;
   };
   render() {
-    console.log(this.units.measure[1]);
     return (
       <div className="app">
         <div className="panel">
@@ -59,11 +62,14 @@ class App extends Component {
             amountChange={this.handleChangeAmount}
           />
           <UnitInput
-            units={this.units}
+            database={this.units}
+            state={this.state}
             unitChangeFrom={this.handleChangeFrom}
             unitChangeTo={this.handleChangeTo}
+            convert={this.convert}
+            updateResult={this.handleChangeResult}
           />
-          <ResultOutput state={this.state} />
+          <ResultOutput result={this.state.result} />
         </div>
       </div>
     );
