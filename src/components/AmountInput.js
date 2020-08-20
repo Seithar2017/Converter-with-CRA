@@ -7,8 +7,6 @@ class AmountInput extends Component {
   };
 
   handleChange = (e) => {
-    console.log(e.target);
-
     if (e.target.value <= 0) {
       this.setState({
         amount: "",
