@@ -32,9 +32,13 @@ class UnitInput extends Component {
     const { activeFrom, activeTo, amount } = this.props.state;
     if (this.state.activeFrom && this.state.activeTo && amount > 0) {
       const result = this.props.convert(activeFrom, activeTo, amount);
-      this.props.updateResult(result);
+      this.props.updateResult(`${amount}${activeFrom} is ${result}${activeTo}`);
     } else {
       this.props.updateResult("Incorrect values");
+      this.setState({
+        activeFrom: "",
+        activeTo: "",
+      });
     }
   };
   render() {
