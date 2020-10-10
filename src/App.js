@@ -55,33 +55,36 @@ class App extends Component {
   //else if (uT === "mile") return main * 1.609344;
   //e.t.c
   convert = (uF, uT, amount) => {
+    // debugger;
     if (uF === uT) return amount;
     const main = this.convertToMainUnit(uF);
     const conversion = this.convertAnyFromMain(uT, main);
     return amount * conversion;
   };
   convertAnyFromMain = (uT, main) => {
-    if (uT === "main") return main;
+    // debugger;
+    if (uT === "kg" || uT === "pln") return main;
     else if (uT === "dag") return main * 100;
     else if (uT === "gram") return main * 1000;
     else if (uT === "stone") return main * 0.157473044;
-    else if (uT === "tone") return main * 0.0001;
-    else if (uT === "usd") return main * 3.72;
-    else if (uT === "euro") return main * 4.4;
-    else if (uT === "gbp") return main * 4.87;
+    else if (uT === "tone") return main * 0.001;
+    else if (uT === "usd") return main * 0.27;
+    else if (uT === "euro") return main * 0.23;
+    else if (uT === "gbp") return main * 0.21;
   };
 
   convertToMainUnit = (uF) => {
     // The main unit as weight is the KG unit
+    // debugger;
     if (uF === "dag") return 0.01;
     else if (uF === "gram") return 0.001;
     else if (uF === "stone") return 6.35029318;
     else if (uF === "tone") return 1000;
     else if (uF === "kg") return 1;
-    //The main unit as cash is the PL unit
-    else if (uF === "usd") return 0.27;
-    else if (uF === "euro") return 0.23;
-    else if (uF === "gbp") return 0.21;
+    //The main unit as cash is the PLN unit
+    else if (uF === "usd") return 3.72;
+    else if (uF === "euro") return 4.4;
+    else if (uF === "gbp") return 4.87;
     else if (uF === "pln") return 1;
   };
   render() {
